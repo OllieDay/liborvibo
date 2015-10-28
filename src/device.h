@@ -1,0 +1,6 @@
+#ifndef ORVIBO_DEVICE_H
+#define ORVIBO_DEVICE_H
+
+#define ORVIBO_SOCKET_PORT 10000
+
+#endif
