@@ -16,7 +16,7 @@ node_create(void *const data) {
 }
 
 void
-node_destroy(struct node *node, const DESTROY destroy) {
+node_destroy(struct node *node, const NODE_DATA_DESTROY destroy) {
     if (node != NULL && destroy != NULL) {
         destroy(node->data);
     }
@@ -24,7 +24,7 @@ node_destroy(struct node *node, const DESTROY destroy) {
 }
 
 void
-node_destroy_all(struct node *node, const DESTROY destroy) {
+node_destroy_all(struct node *node, const NODE_DATA_DESTROY destroy) {
     struct node *temp = NULL;
     while (node != NULL) {
         temp = node->next;
@@ -41,7 +41,7 @@ node_prepend(struct node *const node, struct node *const before) {
 }
 
 void
-node_remove(struct node *node, const void *const data, MATCH match) {
+node_remove(struct node *node, const void *const data, NODE_DATA_MATCH match) {
     if (match == NULL) {
         match = is_reference_equal;
     }
@@ -55,7 +55,7 @@ node_remove(struct node *node, const void *const data, MATCH match) {
 }
 
 struct node *
-node_find(struct node *node, const void *data, MATCH match) {
+node_find(struct node *node, const void *data, NODE_DATA_MATCH match) {
     if (match == NULL) {
         match = is_reference_equal;
     }

@@ -9,25 +9,25 @@ struct node {
     struct node *next;
 };
 
-typedef bool (*MATCH) (const void *, const void *);
-typedef void (*DESTROY) (void *);
+typedef bool (*NODE_DATA_MATCH) (const void *, const void *);
+typedef void (*NODE_DATA_DESTROY) (void *);
 
 struct node *
 node_create(void *data);
 
 void
-node_destroy(struct node *node, DESTROY destroy);
+node_destroy(struct node *node, NODE_DATA_DESTROY destroy);
 
 void
-node_destroy_all(struct node *node, DESTROY destroy);
+node_destroy_all(struct node *node, NODE_DATA_DESTROY destroy);
 
 void
 node_prepend(struct node *node, struct node *before);
 
 void
-node_remove(struct node *node, const void *data, MATCH match);
+node_remove(struct node *node, const void *data, NODE_DATA_MATCH match);
 
 struct node *
-node_find(struct node *node, const void *data, MATCH match);
+node_find(struct node *node, const void *data, NODE_DATA_MATCH match);
 
 #endif

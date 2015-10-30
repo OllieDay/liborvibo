@@ -221,7 +221,7 @@ is_address_equal(const char *const x, const char *const y) {
 static bool
 is_local_address(const char *const ip) {
     struct node *const addresses = get_local_addresses();
-    const bool is_local = node_find(addresses, ip, (MATCH) is_address_equal) != NULL;
+    const bool is_local = node_find(addresses, ip, (NODE_DATA_MATCH) is_address_equal) != NULL;
     node_destroy_all(addresses, free);
     return is_local;
 }
