@@ -34,5 +34,6 @@ orvibo_stop(void) {
     }
     socket_event_handler = NULL;
     node_destroy_all(sockets, NULL);
+    sockets = NULL;
     return true;
 }
