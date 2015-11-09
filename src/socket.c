@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "device.h"
 #include "list.h"
 #include "message_sender.h"
 #include "sockets.h"
@@ -11,6 +12,9 @@
 #define ORVIBO_BROADCAST_ADDRESS "255.255.255.255"
 
 ORVIBO_EVENT_HANDLER socket_event_handler = NULL;
+
+static bool
+is_orvibo_mac(const unsigned char mac[static ETHER_ADDR_LEN]);
 
 static bool
 change_state(struct orvibo_socket *socket, enum orvibo_state state);
@@ -21,6 +25,9 @@ reverse_mac(unsigned char destination[static ETHER_ADDR_LEN],
 
 struct orvibo_socket *
 orvibo_socket_create(const unsigned char mac[static const ETHER_ADDR_LEN]) {
+   if (!is_orvibo_mac(mac)) {
+      return NULL;
+   }
     struct orvibo_socket *const socket = malloc(sizeof(*socket));
     if (socket == NULL) {
         return NULL;
@@ -115,6 +122,11 @@ orvibo_socket_off(struct orvibo_socket *const socket) {
 bool
 orvibo_socket_on(struct orvibo_socket *const socket) {
     return change_state(socket, ORVIBO_STATE_ON);
+}
+
+bool
+is_orvibo_mac(const unsigned char mac[static const ETHER_ADDR_LEN]) {
+   return memcmp(mac, (unsigned char[]) ORVIBO_SOCKET_IDENTIFIER, 2) == 0;
 }
 
 static bool

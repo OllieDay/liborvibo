@@ -2,5 +2,6 @@
 #define ORVIBO_DEVICE_H
 
 #define ORVIBO_SOCKET_PORT 10000
+#define ORVIBO_SOCKET_IDENTIFIER {0xac, 0xcf}
 
 #endif
