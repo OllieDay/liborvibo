@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "device.h"
+
 static bool
 validate(const unsigned char *data, size_t length);
 
@@ -27,8 +29,7 @@ parse_message(const unsigned char *const data, const size_t length) {
 unsigned char *
 parse_mac(const unsigned char data[static const ETHER_ADDR_LEN], const size_t length) {
     for (size_t i = 0; i <= (length - ETHER_ADDR_LEN); i++) {
-        // Orvibo MAC addresses begin with ac:cf.
-        if (data[i] == 0xac && data[i + 1] == 0xcf) {
+        if (is_orvibo_mac(&data[i])) {
             unsigned char *const mac = malloc(sizeof(*mac) * ETHER_ADDR_LEN);
             if (mac != NULL) {
                 memcpy(mac, &data[i], ETHER_ADDR_LEN);
