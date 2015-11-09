@@ -15,4 +15,10 @@ target_link_libraries(static ${CMAKE_THREAD_LIBS_INIT})
 set_target_properties(shared PROPERTIES OUTPUT_NAME orvibo)
 set_target_properties(static PROPERTIES OUTPUT_NAME orvibo)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -O0 -g -pedantic-errors -Wno-padded -Werror")
+
+if (CMAKE_C_COMPILER_ID MATCHES "Clang")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Weverything")
+elseif (CMAKE_C_COMPILER_ID MATCHES "GNU")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra")
+endif()
