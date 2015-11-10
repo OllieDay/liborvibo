@@ -23,6 +23,10 @@ enum orvibo_event {
     ORVIBO_EVENT_ON
 };
 
+// Get event string: "discover", "subscribe", "unsubscribe", "off", "on".
+const char *
+orvibo_event_string(enum orvibo_event event);
+
 // Physical socket state, i.e. unknown, off, on.
 enum orvibo_state {
     // Socket state unknown, either because it is not discovered or received message data was corrupt.
@@ -32,6 +36,10 @@ enum orvibo_state {
     // Socket switched on.
     ORVIBO_STATE_ON
 };
+
+// Get state string: "unknown", "off", "on"
+const char *
+orvibo_state_string(enum orvibo_state state);
 
 // Handle to an Orvibo socket created with orvibo_socket_create().
 // Get socket info with orvibo_socket_* (mac, ip, subscribed, state).

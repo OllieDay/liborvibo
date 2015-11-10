@@ -9,4 +9,7 @@ enum orvibo_event {
     ORVIBO_EVENT_ON
 };
 
+const char *
+orvibo_event_string(enum orvibo_event event);
+
 #endif

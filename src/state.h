@@ -7,4 +7,7 @@ enum orvibo_state {
     ORVIBO_STATE_ON
 };
 
+const char *
+orvibo_state_string(enum orvibo_state state);
+
 #endif
