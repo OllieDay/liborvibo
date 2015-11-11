@@ -14,10 +14,6 @@ struct orvibo_socket {
     enum orvibo_state state;
 };
 
-typedef void (*ORVIBO_EVENT_HANDLER) (struct orvibo_socket *, enum orvibo_event);
-
-extern ORVIBO_EVENT_HANDLER socket_event_handler;
-
 struct orvibo_socket *
 orvibo_socket_create(const unsigned char mac[static ETHER_ADDR_LEN]);
 

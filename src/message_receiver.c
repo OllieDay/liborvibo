@@ -8,6 +8,7 @@
 #include <unistd.h>
 
 #include "device.h"
+#include "event_handler.h"
 #include "message_parser.h"
 #include "sockets.h"
 
@@ -149,7 +150,7 @@ handle_message(const char *const ip, const struct message *const message) {
 static void
 handle_discover_message(struct orvibo_socket *const socket, const struct message *const message) {
     socket->state = message->state;
-    socket_event_handler(socket, ORVIBO_EVENT_DISCOVER);
+    handle_event(socket, ORVIBO_EVENT_DISCOVER);
 }
 
 static void
@@ -157,7 +158,7 @@ handle_subscribe_message(struct orvibo_socket *const socket, const struct messag
     if (!socket->subscribed) {
         socket->subscribed = true;
         socket->state = message->state;
-        socket_event_handler(socket, ORVIBO_EVENT_SUBSCRIBE);
+        handle_event(socket, ORVIBO_EVENT_SUBSCRIBE);
     }
 }
 
@@ -168,7 +169,7 @@ handle_state_message(struct orvibo_socket *const socket, const struct message *c
         && (message->state == ORVIBO_STATE_OFF || message->state == ORVIBO_STATE_ON)) {
         socket->state = message->state;
         const enum orvibo_event event = socket->state == ORVIBO_STATE_OFF ? ORVIBO_EVENT_OFF : ORVIBO_EVENT_ON;
-        socket_event_handler(socket, event);
+        handle_event(socket, event);
     }
 }
 

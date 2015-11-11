@@ -8,16 +8,13 @@
 static pthread_t receive_thread;
 
 bool
-orvibo_start(const ORVIBO_EVENT_HANDLER event_handler) {
+orvibo_start(const ORVIBO_EVENT_HANDLER handler) {
     if (running) {
         return true;
     }
-    if (event_handler == NULL) {
-        return false;
-    }
-    socket_event_handler = event_handler;
+    set_event_handler(handler);
     if (pthread_create(&receive_thread, NULL, (void *(*) (void *)) receive, NULL) != 0) {
-        socket_event_handler = NULL;
+        clear_event_handler();
         return false;
     }
     return running = true;
@@ -32,7 +29,7 @@ orvibo_stop(void) {
     if (pthread_join(receive_thread, NULL) != 0) {
         return false;
     }
-    socket_event_handler = NULL;
+    clear_event_handler();
     node_destroy_all(sockets, NULL);
     sockets = NULL;
     return true;

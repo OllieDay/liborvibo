@@ -5,14 +5,13 @@
 #include <string.h>
 
 #include "device.h"
+#include "event_handler.h"
 #include "list.h"
 #include "message_sender.h"
 #include "sockets.h"
 
 #define ORVIBO_BROADCAST_ADDRESS "255.255.255.255"
 #define ORVIBO_MESSAGE_PADDING 0x20, 0x20, 0x20, 0x20, 0x20, 0x20
-
-ORVIBO_EVENT_HANDLER socket_event_handler = NULL;
 
 static bool
 change_state(struct orvibo_socket *socket, enum orvibo_state state);
@@ -128,7 +127,7 @@ orvibo_socket_unsubscribe(struct orvibo_socket *const socket) {
     // There's no unsubscribe message, but we still want to provide a method of unsubscribing from events.
     socket->subscribed = false;
     socket->state = ORVIBO_STATE_UNKNOWN;
-    socket_event_handler(socket, ORVIBO_EVENT_UNSUBSCRIBE);
+    handle_event(socket, ORVIBO_EVENT_UNSUBSCRIBE);
     return true;
 }
 

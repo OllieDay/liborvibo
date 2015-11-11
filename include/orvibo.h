@@ -49,7 +49,7 @@ struct orvibo_socket;
 typedef void (*ORVIBO_EVENT_HANDLER) (struct orvibo_socket *, enum orvibo_event);
 
 // Start listening for messages from sockets on the network.
-// Provided ORVIBO_EVENT_HANDLER is used to raise events when a socket change occurs.
+// Provided ORVIBO_EVENT_HANDLER is used to raise events when a socket change occurs. Can be NULL.
 // Must be called prior to orvibo_socket_* (discover, subscribe, unsubscribe, off, on).
 // Stop listening for messages with orvibo_stop().
 bool
