@@ -23,7 +23,8 @@ void event_handler(struct orvibo_socket *socket, enum orvibo_event event);
 
 Create a socket from its MAC address:
 ```c
-struct orvibo_socket *socket = orvibo_socket_create((unsigned char[]) {0xAC, 0xCF, ...});
+const unsigned char mac[] = {0xAC, 0xCF, ...};
+struct orvibo_socket *socket = orvibo_socket_create(mac);
 ```
 
 Start the client:
