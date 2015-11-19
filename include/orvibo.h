@@ -3,7 +3,6 @@
 #ifndef ORVIBO_H
 #define ORVIBO_H
 
-#include <net/ethernet.h>
 #include <stdbool.h>
 
 // Events raised when a socket change occurs.
@@ -59,17 +58,17 @@ orvibo_start(ORVIBO_EVENT_HANDLER handler);
 bool
 orvibo_stop(void);
 
-// Create socket with specified MAC address.
+// Create socket with specified MAC address, e.g. "ac:cf:00:00:00:00"
 // Call orvibo_socket_destroy() to free.
 struct orvibo_socket *
-orvibo_socket_create(const unsigned char mac[static ETHER_ADDR_LEN]);
+orvibo_socket_create(const char *mac);
 
 // Free socket created with orvibo_socket_create().
 void
 orvibo_socket_destroy(struct orvibo_socket *socket);
 
 // Get socket MAC address.
-const unsigned char *
+const char *
 orvibo_socket_mac(const struct orvibo_socket *socket);
 
 // Get socket IP address.

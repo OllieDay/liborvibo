@@ -1,6 +1,7 @@
 #include "socket.h"
 
 #include <arpa/inet.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -13,6 +14,9 @@
 #define ORVIBO_BROADCAST_ADDRESS "255.255.255.255"
 #define ORVIBO_MESSAGE_PADDING 0x20, 0x20, 0x20, 0x20, 0x20, 0x20
 
+static unsigned char *
+parse_mac_string(const char *mac);
+
 static bool
 change_state(struct orvibo_socket *socket, enum orvibo_state state);
 
@@ -21,19 +25,29 @@ reverse_mac(unsigned char destination[static ETHER_ADDR_LEN],
             const unsigned char source[static ETHER_ADDR_LEN]);
 
 struct orvibo_socket *
-orvibo_socket_create(const unsigned char mac[static const ETHER_ADDR_LEN]) {
-   if (!is_orvibo_mac(mac)) {
-      return NULL;
-   }
-    struct orvibo_socket *const socket = malloc(sizeof(*socket));
-    if (socket == NULL) {
-        return NULL;
-    }
-    memcpy(socket->mac, mac, ETHER_ADDR_LEN);
-    socket->ip = NULL;
-    socket->subscribed = false;
-    socket->state = ORVIBO_STATE_UNKNOWN;
-    return socket;
+orvibo_socket_create(const char *const mac) {
+	char *const mac_string = strdup(mac);
+	if (mac_string == NULL) {
+		return NULL;
+	}
+	unsigned char *mac_bytes = parse_mac_string(mac_string);
+	if (mac_bytes == NULL || !is_orvibo_mac(mac_bytes)) {
+		goto cleanup;
+	}
+	struct orvibo_socket *const socket = malloc(sizeof(*socket));
+	if (socket == NULL) {
+		goto cleanup;
+	}
+	memcpy(socket->mac_bytes, mac_bytes, ETHER_ADDR_LEN);
+	socket->mac_string = mac_string;
+	socket->ip = NULL;
+	socket->subscribed = false;
+	socket->state = ORVIBO_STATE_UNKNOWN;
+	return socket;
+cleanup:
+	free(mac_string);
+	free(mac_bytes);
+	return NULL;
 }
 
 void
@@ -42,13 +56,14 @@ orvibo_socket_destroy(struct orvibo_socket *const socket) {
         return;
     }
     remove_socket(socket);
+	free(socket->mac_string);
     free(socket->ip);
     free(socket);
 }
 
-const unsigned char *
+const char *
 orvibo_socket_mac(const struct orvibo_socket *const socket) {
-    return socket != NULL ? socket->mac : NULL;
+    return socket != NULL ? socket->mac_string : NULL;
 }
 
 const char *
@@ -83,7 +98,7 @@ orvibo_socket_discover(struct orvibo_socket *const socket) {
         // Padding.
         ORVIBO_MESSAGE_PADDING
     };
-    memcpy(&data[6], socket->mac, 6);
+    memcpy(&data[6], socket->mac_bytes, 6);
     if (!send_message(ORVIBO_BROADCAST_ADDRESS, data, 18)) {
         return false;
     }
@@ -97,7 +112,7 @@ orvibo_socket_subscribe(struct orvibo_socket *const socket) {
     }
     // Subscribe message contains the socket's MAC address in reverse.
     static unsigned char reversed_mac[ETHER_ADDR_LEN];
-    reverse_mac(reversed_mac, socket->mac);
+    reverse_mac(reversed_mac, socket->mac_bytes);
     static unsigned char data[30] = {
         // Orvibo socket identifier.
         0x68, 0x64,
@@ -114,7 +129,7 @@ orvibo_socket_subscribe(struct orvibo_socket *const socket) {
         // Padding.
         ORVIBO_MESSAGE_PADDING
     };
-    memcpy(&data[6], socket->mac, 6);
+    memcpy(&data[6], socket->mac_bytes, 6);
     memcpy(&data[18], reversed_mac, ETHER_ADDR_LEN);
     return send_message(socket->ip, data, 30);
 }
@@ -139,6 +154,16 @@ orvibo_socket_off(struct orvibo_socket *const socket) {
 bool
 orvibo_socket_on(struct orvibo_socket *const socket) {
     return change_state(socket, ORVIBO_STATE_ON);
+}
+
+static unsigned char *
+parse_mac_string(const char *const mac) {
+	unsigned char *buf = malloc(sizeof(buf) * 6);
+	if (sscanf(mac, "%hhx:%hhx:%hhx:%hhx:%hhx:%hhx", &buf[0], &buf[1], &buf[2], &buf[3], &buf[4], &buf[5]) == 6) {
+		return buf;
+	}
+	free(buf);
+	return NULL;
 }
 
 static bool
