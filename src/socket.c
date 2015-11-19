@@ -26,6 +26,9 @@ reverse_mac(unsigned char destination[static ETHER_ADDR_LEN],
 
 struct orvibo_socket *
 orvibo_socket_create(const char *const mac) {
+    if (mac == NULL) {
+        return NULL;
+    }
 	char *const mac_string = strdup(mac);
 	if (mac_string == NULL) {
 		return NULL;
