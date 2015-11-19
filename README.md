@@ -7,7 +7,7 @@ $ git clone https://github.com/OllieDay/orvibo.git
 $ cd orvibo
 $ mkdir build && cd build
 $ cmake ..
-$ make install && make clean
+$ make install clean
 ```
 
 ## Usage
