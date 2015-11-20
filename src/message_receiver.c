@@ -167,10 +167,9 @@ handle_state_message(struct orvibo_socket *const socket, const struct message *c
 	if (socket->subscribed
 		&& socket->state != message->state
 		&& (message->state == ORVIBO_STATE_OFF || message->state == ORVIBO_STATE_ON)) {
-			socket->state = message->state;
-			const enum orvibo_event event = socket->state == ORVIBO_STATE_OFF ? ORVIBO_EVENT_OFF : ORVIBO_EVENT_ON;
-			handle_event(socket, event);
-		}
+		socket->state = message->state;
+		const enum orvibo_event event = socket->state == ORVIBO_STATE_OFF ? ORVIBO_EVENT_OFF : ORVIBO_EVENT_ON;
+		handle_event(socket, event);
 	}
 }
 
