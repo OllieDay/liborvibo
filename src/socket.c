@@ -190,6 +190,7 @@ change_state(struct orvibo_socket *const socket, const enum orvibo_state state) 
         // State.
         0
    };
+    memcpy(&data[6], socket->mac_bytes, 6);
     data[22] = state == ORVIBO_STATE_OFF ? 0x0 : 0x1;
     return send_message(socket->ip, data, 23);
 }
