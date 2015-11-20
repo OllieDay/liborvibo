@@ -10,16 +10,16 @@
 // otherwise something external, e.g. switching the socket off or on manually.
 // Additional socket events exist that are not implemented by the library and are instead ignored.
 enum orvibo_event {
-    // Socket discovered.
-    ORVIBO_EVENT_DISCOVER,
-    // Socket subscribed.
-    ORVIBO_EVENT_SUBSCRIBE,
-    // Socket unsubscribed.
-    ORVIBO_EVENT_UNSUBSCRIBE,
-    // Socket switched off.
-    ORVIBO_EVENT_OFF,
-    // Socket switched on.
-    ORVIBO_EVENT_ON
+	// Socket discovered.
+	ORVIBO_EVENT_DISCOVER,
+	// Socket subscribed.
+	ORVIBO_EVENT_SUBSCRIBE,
+	// Socket unsubscribed.
+	ORVIBO_EVENT_UNSUBSCRIBE,
+	// Socket switched off.
+	ORVIBO_EVENT_OFF,
+	// Socket switched on.
+	ORVIBO_EVENT_ON
 };
 
 // Get event string: "discover", "subscribe", "unsubscribe", "off", "on".
@@ -28,12 +28,12 @@ orvibo_event_string(enum orvibo_event event);
 
 // Physical socket state, i.e. unknown, off, on.
 enum orvibo_state {
-    // Socket state unknown, either because it is not discovered or received message data was corrupt.
-    ORVIBO_STATE_UNKNOWN,
-    // Socket switched off.
-    ORVIBO_STATE_OFF,
-    // Socket switched on.
-    ORVIBO_STATE_ON
+	// Socket state unknown, either because it is not discovered or received message data was corrupt.
+	ORVIBO_STATE_UNKNOWN,
+	// Socket switched off.
+	ORVIBO_STATE_OFF,
+	// Socket switched on.
+	ORVIBO_STATE_ON
 };
 
 // Get state string: "unknown", "off", "on"

@@ -9,10 +9,10 @@
 
 struct orvibo_socket {
 	char *mac_string;
-    unsigned char mac_bytes[ETHER_ADDR_LEN];
-    char *ip;
-    bool subscribed;
-    enum orvibo_state state;
+	unsigned char mac_bytes[ETHER_ADDR_LEN];
+	char *ip;
+	bool subscribed;
+	enum orvibo_state state;
 };
 
 struct orvibo_socket *

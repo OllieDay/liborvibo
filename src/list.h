@@ -5,8 +5,8 @@
 #include <stddef.h>
 
 struct node {
-    void *data;
-    struct node *next;
+	void *data;
+	struct node *next;
 };
 
 typedef bool (*NODE_DATA_MATCH) (const void *, const void *);
