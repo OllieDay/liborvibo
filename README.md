@@ -23,8 +23,7 @@ void event_handler(struct orvibo_socket *socket, enum orvibo_event event);
 
 Create a socket from its MAC address:
 ```c
-const unsigned char mac[] = {0xAC, 0xCF, ...};
-struct orvibo_socket *socket = orvibo_socket_create(mac);
+struct orvibo_socket *socket = orvibo_socket_create("ac:cf:00:00:00:00");
 ```
 
 Start the client:
@@ -39,7 +38,7 @@ orvibo_socket_discover(socket);
 
 Get info on the socket:
 ```c
-const unsigned char *mac = orvibo_socket_mac(socket);
+const char *mac = orvibo_socket_mac(socket);
 const char *ip = orvibo_socket_ip(socket);
 bool subscribed = orvibo_socket_subscribed(socket);
 enum orvibo_state state = orvibo_socket_state(socket);
