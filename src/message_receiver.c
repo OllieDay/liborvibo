@@ -50,13 +50,10 @@ receive(void) {
 	if (fd == -1) {
 		return;
 	}
-	static const struct sockaddr_in destination = {
-		.sin_family = AF_INET,
-		.sin_port = htons(ORVIBO_SOCKET_PORT),
-		.sin_addr = {
-			.s_addr = htonl(INADDR_ANY)
-		},
-	};
+	static struct sockaddr_in destination;
+	destination.sin_family = AF_INET;
+	destination.sin_port = htons(ORVIBO_SOCKET_PORT);
+	destination.sin_addr.s_addr = htonl(INADDR_ANY);
 	// Short timeout to keep things running smoothly.
 	static const struct timeval timeout = {
 		.tv_sec = 0,

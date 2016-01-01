@@ -12,11 +12,9 @@ send_message(const char *const ip, const unsigned char *const data, const size_t
 	if (fd == -1) {
 		return false;
 	}
-	static struct sockaddr_in destination = {
-		.sin_family = AF_INET,
-		.sin_port = htons(ORVIBO_SOCKET_PORT),
-		.sin_zero = {0}
-	};
+	static struct sockaddr_in destination;
+	destination.sin_family = AF_INET;
+	destination.sin_port = htons(ORVIBO_SOCKET_PORT);
 	if (inet_aton(ip, &destination.sin_addr) == 0) {
 		close(fd);
 		return false;
