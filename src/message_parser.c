@@ -1,7 +1,10 @@
 #include "message_parser.h"
 
+#if defined(__linux__)
+	#include <stdint.h>
+#endif
+
 #include <stdbool.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
