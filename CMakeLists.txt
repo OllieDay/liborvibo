@@ -20,7 +20,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0 -g -pedantic-errors -Wno-padded -Werror"
 if (CMAKE_C_COMPILER_ID MATCHES "Clang")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Weverything")
 elseif (CMAKE_C_COMPILER_ID MATCHES "GNU")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wno-return-type")
 endif()
 
 install(FILES include/orvibo.h DESTINATION "${CMAKE_INSTALL_PREFIX}/include")
