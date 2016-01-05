@@ -1,6 +1,7 @@
 #ifndef ORVIBO_MESSAGE_PARSER_H
 #define ORVIBO_MESSAGE_PARSER_H
 
+#include <sys/types.h>
 #include <net/ethernet.h>
 
 #include "message.h"

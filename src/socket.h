@@ -1,6 +1,7 @@
 #ifndef ORVIBO_SOCKET_H
 #define ORVIBO_SOCKET_H
 
+#include <sys/types.h>
 #include <net/ethernet.h>
 #include <stdbool.h>
 

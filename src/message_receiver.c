@@ -2,9 +2,11 @@
 
 #include <arpa/inet.h>
 #include <ifaddrs.h>
+#include <netinet/in.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/socket.h>
 #include <unistd.h>
 
 #include "device.h"

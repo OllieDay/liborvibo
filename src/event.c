@@ -14,5 +14,4 @@ orvibo_event_string(const enum orvibo_event event) {
 		case ORVIBO_EVENT_ON:
 			return "on";
 	}
-	return "";
 }
