@@ -1,10 +1,10 @@
-# orvibo
+# liborvibo
 Library for controlling Orvibo Smart Wi-Fi Plug
 
 ## Installation
 ```
-$ git clone https://github.com/OllieDay/orvibo.git
-$ cd orvibo
+$ git clone https://github.com/OllieDay/liborvibo.git
+$ cd liborvibo
 $ mkdir build && cd build
 $ cmake ..
 $ make install clean
